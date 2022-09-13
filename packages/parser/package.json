@@ -1,0 +1,14 @@
+{
+  "name": "@spiel/parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "peggy index.peggy"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "peggy": "^2.0.1"
+  }
+}
