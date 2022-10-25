@@ -17,6 +17,13 @@ function arg(name, value) {
     }
 }
 
+function nameReducer(acc, curr) {
+    const name = curr.name;
+    delete curr.name
+    acc[name] = curr
+    return acc
+}
+
 function peg$subclass(child, parent) {
   function C() { this.constructor = child; }
   C.prototype = parent.prototype;
@@ -218,9 +225,11 @@ function peg$parse(input, options) {
   var peg$e17 = peg$literalExpectation("/", false);
 
   var peg$f0 = function(name, args) {
+    const argsObj = args?.reduce(nameReducer, {}) || {}
     return {
         name,
-        args
+        args: args || [],
+        argsObj
     }
 };
   var peg$f1 = function(head, tails) {
@@ -387,27 +396,33 @@ function peg$parse(input, options) {
   }
 
   function peg$parseCommmand() {
-    var s0, s1, s2, s3, s4;
+    var s0, s1, s2, s3, s4, s5;
 
     s0 = peg$currPos;
     s1 = peg$parseslash();
     if (s1 !== peg$FAILED) {
       s2 = peg$parseword();
       if (s2 !== peg$FAILED) {
-        s3 = peg$parsespace();
-        if (s3 !== peg$FAILED) {
-          s4 = peg$parseArguments();
-          if (s4 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s0 = peg$f0(s2, s4);
+        s3 = peg$currPos;
+        s4 = peg$parsespace();
+        if (s4 !== peg$FAILED) {
+          s5 = peg$parseArguments();
+          if (s5 !== peg$FAILED) {
+            s4 = [s4, s5];
+            s3 = s4;
           } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
+            peg$currPos = s3;
+            s3 = peg$FAILED;
           }
         } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
+          peg$currPos = s3;
+          s3 = peg$FAILED;
         }
+        if (s3 === peg$FAILED) {
+          s3 = null;
+        }
+        peg$savedPos = s0;
+        s0 = peg$f0(s2, s3);
       } else {
         peg$currPos = s0;
         s0 = peg$FAILED;

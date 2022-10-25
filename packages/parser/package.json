@@ -1,7 +1,7 @@
 {
   "name": "@spiel/parser",
   "version": "1.0.0",
-  "description": "",
+  "description": "Command parser for spiel",
   "main": "index.js",
   "scripts": {
     "build": "peggy index.peggy"

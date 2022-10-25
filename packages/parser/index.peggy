@@ -10,12 +10,21 @@ function arg(name, value) {
         type: typeof value
     }
 }
+
+function nameReducer(acc, curr) {
+    const name = curr.name;
+    delete curr.name
+    acc[name] = curr
+    return acc
+}
 }}
 
-Commmand = slash name:word space args:Arguments {
+Commmand = slash name:word args:(space Arguments)? {
+    const argsObj = args?.reduce(nameReducer, {}) || {}
     return {
         name,
-        args
+        args: args || [],
+        argsObj
     }
 }
 
