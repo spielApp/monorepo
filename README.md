@@ -25,7 +25,9 @@ D @spiel/bot - official bot creation library for spiel, Do not trust any other l
 @spiel/bot
 
 # stack
-db & auth & realtime - firebase
+db - mongodb atlas
+realtime - socket.io <-> mongoose
+hosting - netlify
 
 # color scheme
 main: #16C0C0
